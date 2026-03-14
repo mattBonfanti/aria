@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial state: ensure chat is open, button is hidden
     openChatBtn.classList.add('hidden');
 
-    const N8N_WEBHOOK_URL = 'https://lorenzolottici.app.n8n.cloud/webhook-test/fe68a097-f742-445d-b945-1bf311cb7987';
+    const N8N_WEBHOOK_URL = 'https://lorenzolottici.app.n8n.cloud/webhook/fe68a097-f742-445d-b945-1bf311cb7987';
     
     // Create a loading element
     const typingIndicator = document.createElement('div');
