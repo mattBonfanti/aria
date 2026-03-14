@@ -597,6 +597,42 @@ tr:hover td {
     box-shadow: 0 4px 12px rgba(0,0,0,0.5) !important;
 }
 
+/* Category Filters */
+.category-filters::-webkit-scrollbar {
+    display: none;
+}
+.filter-pill {
+    background-color: var(--bg-darker);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+.filter-pill:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+.filter-pill.active {
+    background-color: var(--accent-glow);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.btn.warning {
+    background-color: transparent;
+    border: 1px solid var(--warning);
+    color: var(--warning);
+    transition: var(--transition);
+}
+.btn.warning:hover {
+    background-color: rgba(210, 153, 34, 0.1);
+    box-shadow: 0 0 10px rgba(210, 153, 34, 0.2);
+}
+
 /* Chat Widget */
 .chat-widget {
     position: fixed;

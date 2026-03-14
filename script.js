@@ -36,49 +36,95 @@ document.addEventListener('DOMContentLoaded', () => {
     navKnowledge.addEventListener('click', (e) => { e.preventDefault(); switchView('knowledge'); });
 
     // Knowledge Base - Source Aggregator Logic
-    const addSourceBtn = document.getElementById('addSourceBtn');
+    const expandKnowledgeBtn = document.getElementById('expandKnowledgeBtn');
     const addSourceForm = document.getElementById('addSourceForm');
     const cancelSourceBtn = document.getElementById('cancelSourceBtn');
     const submitSourceBtn = document.getElementById('submitSourceBtn');
     const newSourceInput = document.getElementById('newSourceInput');
     const sourceList = document.getElementById('sourceList');
+    
+    // Knowledge Base - Search and Filter Logic
+    const docSearch = document.getElementById('docSearch');
+    const filterPills = document.querySelectorAll('.filter-pill');
 
-    addSourceBtn.addEventListener('click', () => {
-        addSourceForm.classList.remove('hidden');
-        newSourceInput.focus();
+    function filterSources() {
+        if (!docSearch || !sourceList) return;
+        const searchTerm = docSearch.value.toLowerCase();
+        const activePill = document.querySelector('.filter-pill.active');
+        const activeCategory = activePill ? activePill.dataset.category : 'tutte';
+        const cards = sourceList.querySelectorAll('.source-card');
+
+        cards.forEach(card => {
+            const title = (card.dataset.title || '').toLowerCase();
+            const category = card.dataset.category || '';
+            
+            const matchesSearch = title.includes(searchTerm);
+            const matchesCategory = activeCategory === 'tutte' || category === activeCategory;
+
+            if (matchesSearch && matchesCategory) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    if (docSearch) docSearch.addEventListener('input', filterSources);
+    
+    filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            filterPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            filterSources();
+        });
     });
 
-    cancelSourceBtn.addEventListener('click', () => {
-        addSourceForm.classList.add('hidden');
-        newSourceInput.value = '';
-    });
+    if (expandKnowledgeBtn) {
+        expandKnowledgeBtn.addEventListener('click', () => {
+            addSourceForm.classList.remove('hidden');
+            newSourceInput.focus();
+        });
+    }
 
-    submitSourceBtn.addEventListener('click', () => {
-        const val = newSourceInput.value.trim();
-        if(!val) return;
-        
-        const newCard = document.createElement('div');
-        newCard.className = 'source-card';
-        newCard.innerHTML = `
-            <div class="source-icon web"><i class="fas fa-link"></i></div>
-            <div class="source-info">
-                <h4>${val.length > 20 ? val.substring(0,20)+'...' : val}</h4>
-                <span>Custom Source • Processing...</span>
-            </div>
-        `;
-        sourceList.insertBefore(newCard, sourceList.firstChild);
-        
-        addSourceForm.classList.add('hidden');
-        newSourceInput.value = '';
+    if (cancelSourceBtn) {
+        cancelSourceBtn.addEventListener('click', () => {
+            addSourceForm.classList.add('hidden');
+            newSourceInput.value = '';
+        });
+    }
 
-        // Simulate processing complete after 2 seconds
-        setTimeout(() => {
-            newCard.querySelector('span').textContent = 'Custom Source • Processing Complete';
-            newCard.querySelector('.source-icon').style.backgroundColor = 'rgba(35, 134, 54, 0.1)';
-            newCard.querySelector('.source-icon').style.color = 'var(--success)';
-            newCard.querySelector('.source-icon i').className = 'fas fa-check';
-        }, 2000);
-    });
+    if (submitSourceBtn) {
+        submitSourceBtn.addEventListener('click', () => {
+            const val = newSourceInput.value.trim();
+            if(!val) return;
+            
+            const newCard = document.createElement('div');
+            newCard.className = 'source-card';
+            newCard.dataset.category = 'ricerca';
+            newCard.dataset.title = val;
+            newCard.innerHTML = `
+                <div class="source-icon web"><i class="fas fa-link"></i></div>
+                <div class="source-info">
+                    <h4>${val.length > 20 ? val.substring(0,20)+'...' : val}</h4>
+                    <span>Ricerca • Fonte Personalizzata • Elaborazione...</span>
+                </div>
+            `;
+            sourceList.insertBefore(newCard, sourceList.firstChild);
+            
+            addSourceForm.classList.add('hidden');
+            newSourceInput.value = '';
+
+            // Simulate processing complete after 2 seconds
+            setTimeout(() => {
+                newCard.querySelector('span').textContent = 'Ricerca • Fonte Personalizzata • Elaborazione Completata';
+                newCard.querySelector('.source-icon').style.backgroundColor = 'rgba(35, 134, 54, 0.1)';
+                newCard.querySelector('.source-icon').style.color = 'var(--success)';
+                newCard.querySelector('.source-icon i').className = 'fas fa-check';
+            }, 2000);
+            
+            filterSources();
+        });
+    }
 
     // Vis.js Graph Initialization
     let network = null;
@@ -88,28 +134,28 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Mock data for cement mortars research
         const nodes = new vis.DataSet([
-            { id: 1, label: 'CM-841 (Core Formulation)', group: 'formulation', value: 30, title: 'High-Strength Portland Blend' },
-            { id: 2, label: 'Portland Cement (Type I)', group: 'material', value: 20 },
-            { id: 3, label: 'Fly Ash (Class F)', group: 'material', value: 15 },
-            { id: 4, label: 'Silica Fume', group: 'material', value: 15 },
-            { id: 5, label: 'Compressive Strength Test', group: 'test', value: 25, title: 'Results: 55 MPa at 28 days' },
-            { id: 6, label: 'Curing Chamber A', group: 'environment', value: 10 },
-            { id: 7, label: 'CM-840 (Geopolymer)', group: 'formulation', value: 25 },
-            { id: 8, label: 'Alkaline Activator', group: 'material', value: 15 },
-            { id: 9, label: 'Slag', group: 'material', value: 20 },
-            { id: 10, label: 'Tensile Strength Test', group: 'test', value: 20 }
+            { id: 1, label: 'CM-841 (Formulazione Base)', group: 'formulation', value: 30, title: 'Miscela ad Alta Resistenza' },
+            { id: 2, label: 'Cemento Portland (Tipo I)', group: 'material', value: 20 },
+            { id: 3, label: 'Ceneri Volanti (Classe F)', group: 'material', value: 15 },
+            { id: 4, label: 'Fumi di Silice', group: 'material', value: 15 },
+            { id: 5, label: 'Test Compressione', group: 'test', value: 25, title: 'Risultati: 55 MPa a 28 giorni' },
+            { id: 6, label: 'Camera di Maturazione A', group: 'environment', value: 10 },
+            { id: 7, label: 'CM-840 (Geopolimero)', group: 'formulation', value: 25 },
+            { id: 8, label: 'Attivatore Alcalino', group: 'material', value: 15 },
+            { id: 9, label: 'Scorie', group: 'material', value: 20 },
+            { id: 10, label: 'Test Trazione', group: 'test', value: 20 }
         ]);
 
         const edges = new vis.DataSet([
-            { from: 1, to: 2, label: 'contains 65%' },
-            { from: 1, to: 3, label: 'contains 25%' },
-            { from: 1, to: 4, label: 'contains 10%' },
-            { from: 1, to: 5, label: 'evaluated by' },
-            { from: 5, to: 6, label: 'cured in' },
-            { from: 7, to: 8, label: 'activated by' },
-            { from: 7, to: 9, label: 'base material' },
-            { from: 7, to: 10, label: 'evaluated by' },
-            { from: 3, to: 9, label: 'comparative study' }
+            { from: 1, to: 2, label: 'contiene 65%' },
+            { from: 1, to: 3, label: 'contiene 25%' },
+            { from: 1, to: 4, label: 'contiene 10%' },
+            { from: 1, to: 5, label: 'valutato da' },
+            { from: 5, to: 6, label: 'maturato in' },
+            { from: 7, to: 8, label: 'attivato da' },
+            { from: 7, to: 9, label: 'materiale base' },
+            { from: 7, to: 10, label: 'valutato da' },
+            { from: 3, to: 9, label: 'studio comparativo' }
         ]);
 
         const data = { nodes: nodes, edges: edges };
@@ -156,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     openChat();
                 }
                 
-                chatInput.value = `Tell me more about ${node.label}...`;
+                chatInput.value = `Dimmi di più su ${node.label}...`;
                 chatInput.focus();
             }
         });
@@ -245,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Extract the actual text response based on standard n8n/langchain patterns
-            let aiText = "I received a response but couldn't parse the message.";
+            let aiText = "Ho ricevuto una risposta ma non sono riuscito a interpretare il messaggio.";
             if (data.output) {
                 aiText = data.output;
             } else if (data.text) {
@@ -265,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (chatMessages.contains(typingIndicator)) {
                 chatMessages.removeChild(typingIndicator);
             }
-            appendMessage(`Connection error: Unable to reach the AI assistant. Make sure the n8n webhook is active and listening.`, 'ai-message');
+            appendMessage(`Errore di connessione: Impossibile contattare l'assistente. Assicurati che il webhook n8n sia attivo e in ascolto.`, 'ai-message');
         }
     }
 
@@ -296,8 +342,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Supabase Integration ---
     // Make sure to replace these with your actual Supabase URL and Anon Key
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+    const SUPABASE_URL = 'https://ioekvjvpjbzkkrvyrgcz.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvZWt2anZwamJ6a2tydnlyZ2N6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NzgyNjQsImV4cCI6MjA4OTA1NDI2NH0.PKEenEHPzd0xwvNvp-fdOBHg8eRQkQDEriaxeCg1JOY';
 
     let supabaseClient = null;
     
@@ -308,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadNightlyInsights() {
         if (!supabaseClient) {
-            console.log("Supabase credentials not set. Showing mock insights.");
+            console.log("Credenziali Supabase non impostate. Mostro gli insight simulati.");
             return; // Leave the hardcoded HTML rows intact
         }
 
@@ -346,10 +392,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const statusClass = (item.status && item.status.toLowerCase().includes('index')) ? 'completed' : 'processing';
                     
                     tr.innerHTML = `
-                        <td>${item.source || 'Unknown'}</td>
-                        <td>${item.topic_aggregation || item.title || 'No Topic'}</td>
+                        <td>${item.source || 'Sconosciuto'}</td>
+                        <td>${item.topic_aggregation || item.title || 'Nessun Argomento'}</td>
                         <td><span style="color: ${relevanceColor}; font-weight: bold;">${relString}</span></td>
-                        <td><span class="status-badge ${statusClass}">${item.status || 'Processed'}</span></td>
+                        <td><span class="status-badge ${statusClass}">${item.status || 'Elaborato'}</span></td>
                     `;
                     tableBody.appendChild(tr);
                 });

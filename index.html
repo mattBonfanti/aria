@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CemRes - Cement Mortars Intelligence</title>
-    <meta name="description" content="Advanced dashboard for cement mortar formulation and analysis">
+    <title>Aria - Stark Industries</title>
+    <meta name="description" content="Dashboard avanzata per la ricerca sulle malte cementizie">
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json">
@@ -27,19 +27,19 @@
         <aside class="sidebar">
             <div class="logo-container">
                 <img src="cemres_logo.png" alt="CemRes Logo" class="logo" id="mainLogo">
-                <h2>CemRes</h2>
+                <h2>Aria</h2>
             </div>
             <nav class="nav-menu">
                 <a href="#" class="nav-item active" id="nav-dashboard"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="#" class="nav-item" id="nav-knowledge"><i class="fas fa-brain"></i> Knowledge Base</a>
-                <a href="#" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="nav-item" id="nav-knowledge"><i class="fas fa-brain"></i> Base di Conoscenza</a>
+                <a href="#" class="nav-item"><i class="fas fa-cog"></i> Impostazioni</a>
             </nav>
             <div class="sidebar-footer">
                 <div class="user-profile">
                     <div class="avatar">DR</div>
                     <div class="user-info">
-                        <span class="name">Dr. Rossi</span>
-                        <span class="role">Chief Researcher</span>
+                        <span class="name">Dott.ssa Elena Rossi</span>
+                        <span class="role">Ricercatrice Capo, Stark Industries</span>
                     </div>
                 </div>
             </div>
@@ -50,11 +50,11 @@
             <header class="topbar">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search formulations, compounds, results..." aria-label="Search">
+                    <input type="text" placeholder="Cerca formulazioni, composti, risultati..." aria-label="Cerca">
                 </div>
                 <div class="actions">
-                    <button class="icon-btn" aria-label="Notifications"><i class="fas fa-bell"></i><span class="badge">3</span></button>
-                    <button class="btn primary">New Analysis</button>
+                    <button class="icon-btn" aria-label="Notifiche"><i class="fas fa-bell"></i><span class="badge">3</span></button>
+                    <button class="btn primary">Nuova Analisi</button>
                 </div>
             </header>
 
@@ -62,9 +62,9 @@
                 <!-- Welcome Card -->
                 <div class="card welcome-card">
                     <div class="card-content">
-                        <h1>Good morning, Dr. Rossi</h1>
-                        <p>The nightly web crawler has analyzed 42 new research papers and updated the Knowledge Graph with 12 new relationships.</p>
-                        <button class="btn outline mt-15">View Scraping Log</button>
+                        <h1>Buongiorno, Dott.ssa Rossi</h1>
+                        <p>Il crawler notturno ha analizzato 42 nuovi articoli di ricerca e aggiornato il Knowledge Graph con 12 nuove relazioni.</p>
+                        <button class="btn outline mt-15">Vedi Log Scansioni</button>
                     </div>
                     <div class="card-illustration">
                         <i class="fas fa-spider"></i>
@@ -76,21 +76,21 @@
                     <div class="stat-card">
                         <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
                         <div class="stat-details">
-                            <span class="label">Papers Scraped</span>
+                            <span class="label">Documenti Estratti</span>
                             <span class="value">42</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon success"><i class="fas fa-project-diagram"></i></div>
                         <div class="stat-details">
-                            <span class="label">New Nodes Added</span>
+                            <span class="label">Nodi Aggiunti</span>
                             <span class="value">12</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon warning"><i class="fas fa-lightbulb"></i></div>
                         <div class="stat-details">
-                            <span class="label">Key Insights</span>
+                            <span class="label">Insight Chiave</span>
                             <span class="value">3</span>
                         </div>
                     </div>
@@ -98,35 +98,35 @@
 
                 <!-- Recent Activity / Scraping Results -->
                 <div class="card activity-card">
-                    <h3>Latest Nightly Insights</h3>
+                    <h3>Ultimi Insight Notturni</h3>
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Source</th>
-                                    <th>Topic Aggregation</th>
-                                    <th>Relevance</th>
-                                    <th>Status</th>
+                                    <th>Fonte</th>
+                                    <th>Argomento</th>
+                                    <th>Rilevanza</th>
+                                    <th>Stato</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Journal of Cleaner Production</td>
-                                    <td>Alkali-activated Slag Viscosity</td>
-                                    <td><span style="color: var(--accent); font-weight: bold;">High (94%)</span></td>
-                                    <td><span class="status-badge completed">Indexed</span></td>
+                                    <td>Viscosità Scorie Alcali-Attivate</td>
+                                    <td><span style="color: var(--accent); font-weight: bold;">Alta (94%)</span></td>
+                                    <td><span class="status-badge completed">Indicizzato</span></td>
                                 </tr>
                                 <tr>
                                     <td>Cement and Concrete Research</td>
-                                    <td>Silica Fume Hydration Rates</td>
-                                    <td><span style="color: var(--warning); font-weight: bold;">Med (76%)</span></td>
-                                    <td><span class="status-badge completed">Indexed</span></td>
+                                    <td>Velocità Idratazione Fumi di Silice</td>
+                                    <td><span style="color: var(--warning); font-weight: bold;">Media (76%)</span></td>
+                                    <td><span class="status-badge completed">Indicizzato</span></td>
                                 </tr>
                                 <tr>
                                     <td>constructionmaterials.eu</td>
-                                    <td>New ISO Standards for Geopolymers</td>
-                                    <td><span style="color: var(--text-primary); font-weight: bold;">Low (41%)</span></td>
-                                    <td><span class="status-badge processing">Review Needed</span></td>
+                                    <td>Nuovi Standard ISO Geopolimeri</td>
+                                    <td><span style="color: var(--text-primary); font-weight: bold;">Bassa (41%)</span></td>
+                                    <td><span class="status-badge processing">Da Revisionare</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -137,41 +137,63 @@
             <!-- Knowledge Base View (Hidden by default) -->
             <div class="knowledge-grid hidden" id="knowledgeView">
                 <!-- Source Aggregator Panel -->
-                <div class="source-panel">
-                    <div class="panel-header">
-                        <h3>Sources & Data</h3>
-                        <button class="icon-btn small" aria-label="Add Source" id="addSourceBtn"><i class="fas fa-plus"></i></button>
+                <div class="source-panel" style="display: flex; flex-direction: column;">
+                    <div class="panel-header" style="flex-direction: column; align-items: stretch; gap: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>Base di Conoscenza</h3>
+                            <button class="btn warning small" id="expandKnowledgeBtn" style="display: flex; align-items: center; gap: 6px;">
+                                <i class="fas fa-satellite-dish"></i> Espandi Conoscenza
+                            </button>
+                        </div>
+                        <div class="search-box small" style="display: flex; align-items: center; background-color: var(--bg-darker); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; transition: var(--transition);">
+                            <i class="fas fa-search" style="color: var(--text-secondary); margin-right: 8px; font-size: 12px;"></i>
+                            <input type="text" id="docSearch" placeholder="Cerca documenti, argomenti, composti..." style="background: transparent; border: none; color: var(--text-primary); width: 100%; outline: none; font-size: 13px;">
+                        </div>
+                        <div class="category-filters" style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;">
+                            <button class="filter-pill active" data-category="tutte">Tutte</button>
+                            <button class="filter-pill" data-category="materiali">Materiali</button>
+                            <button class="filter-pill" data-category="ricerca">Ricerca</button>
+                            <button class="filter-pill" data-category="normative">Normative</button>
+                        </div>
                     </div>
                     
                     <div class="add-source-form hidden" id="addSourceForm">
-                        <input type="text" placeholder="Paste URL or text..." id="newSourceInput">
+                        <p style="margin-bottom: 8px; font-size: 13px; color: var(--text-secondary);">Inserisci URL di un paper o archivio normativo per istruire Aria.</p>
+                        <input type="text" placeholder="https://..." id="newSourceInput">
                         <div class="form-actions">
-                            <button class="btn outline small" id="cancelSourceBtn">Cancel</button>
-                            <button class="btn primary small" id="submitSourceBtn">Add</button>
+                            <button class="btn outline small" id="cancelSourceBtn">Annulla</button>
+                            <button class="btn primary small" id="submitSourceBtn">Scansiona URL</button>
                         </div>
                     </div>
 
                     <div class="source-list" id="sourceList">
                         <!-- Simulated Source Cards -->
-                        <div class="source-card active">
+                        <div class="source-card active" data-category="normative" data-title="Specifiche CM-841.pdf">
                             <div class="source-icon doc"><i class="fas fa-file-pdf"></i></div>
                             <div class="source-info">
-                                <h4>CM-841 Specs.pdf</h4>
-                                <span>3.2 MB • Processing Complete</span>
+                                <h4>Specifiche CM-841.pdf</h4>
+                                <span>Normative • 3.2 MB • Elaborato</span>
                             </div>
                         </div>
-                        <div class="source-card">
+                        <div class="source-card" data-category="ricerca" data-title="Ricerca Geopolimeri 2023">
                             <div class="source-icon web"><i class="fas fa-globe"></i></div>
                             <div class="source-info">
-                                <h4>Geopolymer Research 2023</h4>
-                                <span>Web Article • Synced</span>
+                                <h4>Ricerca Geopolimeri 2023</h4>
+                                <span>Ricerca • Articolo Web • Sincronizzato</span>
                             </div>
                         </div>
-                        <div class="source-card">
+                        <div class="source-card" data-category="materiali" data-title="DB Limiti Materiali">
                             <div class="source-icon api"><i class="fas fa-database"></i></div>
                             <div class="source-info">
-                                <h4>Material Limits DB</h4>
-                                <span>API • Last mapped 2h ago</span>
+                                <h4>DB Limiti Materiali</h4>
+                                <span>Materiali • API • Ultima mappatura 2h fa</span>
+                            </div>
+                        </div>
+                        <div class="source-card" data-category="test" data-title="Risultati Trazione Lotto B">
+                            <div class="source-icon doc" style="background-color: rgba(35, 134, 54, 0.1); color: var(--success);"><i class="fas fa-file-excel"></i></div>
+                            <div class="source-info">
+                                <h4>Risultati Trazione Lotto B.xlsx</h4>
+                                <span>Test • 1.1 MB • Elaborato</span>
                             </div>
                         </div>
                     </div>
@@ -180,11 +202,11 @@
                 <!-- Database Graph Visualization -->
                 <div class="graph-panel card">
                     <div class="panel-header">
-                        <h3>Compound Relationship Graph</h3>
+                        <h3>Grafo Relazioni Composti</h3>
                         <div class="graph-actions">
-                            <button class="icon-btn small" title="Zoom In"><i class="fas fa-search-plus"></i></button>
-                            <button class="icon-btn small" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
-                            <button class="icon-btn small" title="Fit to Screen"><i class="fas fa-compress"></i></button>
+                            <button class="icon-btn small" title="Ingrandisci"><i class="fas fa-search-plus"></i></button>
+                            <button class="icon-btn small" title="Riduci"><i class="fas fa-search-minus"></i></button>
+                            <button class="icon-btn small" title="Adatta allo Schermo"><i class="fas fa-compress"></i></button>
                         </div>
                     </div>
                     <div id="knowledgeGraph" class="graph-container"></div>
@@ -198,30 +220,30 @@
                 <div class="ai-agent">
                     <div class="ai-avatar"><i class="fas fa-robot"></i></div>
                     <div class="ai-info">
-                        <span class="ai-name">Mortar AI Assistant</span>
+                        <span class="ai-name">Assistente Aria</span>
                         <span class="ai-status">Online</span>
                     </div>
                 </div>
-                <button class="close-chat" id="toggleChat" aria-label="Minimize Chat"><i class="fas fa-chevron-down"></i></button>
+                <button class="close-chat" id="toggleChat" aria-label="Riduci Chat"><i class="fas fa-chevron-down"></i></button>
             </div>
             
             <div class="chat-messages" id="chatMessages">
                 <div class="message ai-message">
                     <div class="msg-content">
-                        Hello Dr. Rossi. I've analyzed the composition of CM-841. The compressive strength looks promising at 28 days. How can I assist you with this formulation?
+                        Benvenuta, Dott.ssa Rossi! Sono Aria, il tuo assistente virtuale della Stark Industries. Ho già allineato i dati con le ultime ricerche e sono pronto a supportarti nel tuo lavoro. Da che parte iniziamo oggi?
                     </div>
                     <span class="msg-time" id="initTime">10:35 AM</span>
                 </div>
             </div>
             
             <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Ask about materials, formulations..." aria-label="Chat Input">
-                <button id="sendBtn" class="send-btn" aria-label="Send Message"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="chatInput" placeholder="Chiedi informazioni su materiali..." aria-label="Inserisci messaggio">
+                <button id="sendBtn" class="send-btn" aria-label="Invia"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
 
         <!-- Chat Toggle Button (Visible when chat is minimized) -->
-        <button class="chat-toggle-btn hidden" id="openChatBtn" aria-label="Open Chat">
+        <button class="chat-toggle-btn hidden" id="openChatBtn" aria-label="Apri Chat">
             <i class="fas fa-comment-dots"></i>
         </button>
     </div>
