@@ -1,0 +1,23 @@
+{
+  "name": "CemRes Intelligence",
+  "short_name": "CemRes",
+  "description": "Cement Mortars Research Intelligence Dashboard",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#ff7b00",
+  "icons": [
+    {
+      "src": "cemres_logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "cemres_logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
