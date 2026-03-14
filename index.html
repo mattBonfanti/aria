@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Aria - Stark Industries</title>
-    <meta name="description" content="Dashboard avanzata per la ricerca sulle malte cementizie">
-    
+    <meta name="description" content="Assistente AI di ricerca per la Dott.ssa Elena Rossi – Stark Industries">
+
     <!-- PWA Meta Tags -->
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff7b00">
-    <link rel="apple-touch-icon" href="/cemres_logo.png">
+    <link rel="apple-touch-icon" href="cemres_logo.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Aria">
 
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Vis.js for Graph Visualization -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -23,48 +24,66 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
+
+        <!-- ====== OVERLAY per mobile ====== -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ====== SIDEBAR ====== -->
+        <aside class="sidebar" id="sidebar">
             <div class="logo-container">
-                <img src="cemres_logo.png" alt="CemRes Logo" class="logo" id="mainLogo">
-                <h2>Aria</h2>
+                <img src="cemres_logo.png" alt="Stark Industries Logo" class="logo" id="mainLogo">
+                <div>
+                    <h2>Aria</h2>
+                    <span class="company-tag">Stark Industries</span>
+                </div>
             </div>
             <nav class="nav-menu">
-                <a href="#" class="nav-item active" id="nav-dashboard"><i class="fas fa-home"></i> Dashboard</a>
-                <a href="#" class="nav-item" id="nav-knowledge"><i class="fas fa-brain"></i> Base di Conoscenza</a>
-                <a href="#" class="nav-item"><i class="fas fa-cog"></i> Impostazioni</a>
+                <a href="#" class="nav-item active" id="nav-dashboard">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item" id="nav-knowledge">
+                    <i class="fas fa-brain"></i> Base di Conoscenza
+                </a>
+                <a href="#" class="nav-item" id="nav-config">
+                    <i class="fas fa-sliders-h"></i> Configurazione
+                </a>
             </nav>
             <div class="sidebar-footer">
                 <div class="user-profile">
-                    <div class="avatar">DR</div>
+                    <div class="avatar">ER</div>
                     <div class="user-info">
                         <span class="name">Dott.ssa Elena Rossi</span>
-                        <span class="role">Ricercatrice Capo, Stark Industries</span>
+                        <span class="role">Ricercatrice Capo</span>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- ====== MAIN CONTENT ====== -->
         <main class="main-content">
             <header class="topbar">
+                <!-- Hamburger for mobile -->
+                <button class="hamburger-btn" id="hamburgerBtn" aria-label="Apri menu">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Cerca formulazioni, composti, risultati..." aria-label="Cerca">
                 </div>
                 <div class="actions">
                     <button class="icon-btn" aria-label="Notifiche"><i class="fas fa-bell"></i><span class="badge">3</span></button>
-                    <button class="btn primary">Nuova Analisi</button>
+                    <button class="btn primary" id="openChatDesktopBtn"><i class="fas fa-comment-dots"></i> <span class="btn-label">Parla con Aria</span></button>
                 </div>
             </header>
 
-            <div class="dashboard-grid">
+            <!-- ====== DASHBOARD VIEW ====== -->
+            <div class="dashboard-grid" id="dashboardView">
                 <!-- Welcome Card -->
                 <div class="card welcome-card">
                     <div class="card-content">
-                        <h1>Buongiorno, Dott.ssa Rossi</h1>
-                        <p>Il crawler notturno ha analizzato 42 nuovi articoli di ricerca e aggiornato il Knowledge Graph con 12 nuove relazioni.</p>
-                        <button class="btn outline mt-15">Vedi Log Scansioni</button>
+                        <h1 id="welcomeGreeting">Buongiorno, Dott.ssa Rossi</h1>
+                        <p>Il crawler notturno ha analizzato <strong>42 nuovi articoli</strong> di ricerca e aggiornato il Knowledge Graph con <strong>12 nuove relazioni</strong>. Aria è pronta ad assisterti.</p>
+                        <button class="btn outline mt-15" id="viewLogBtn"><i class="fas fa-list"></i> Vedi Log Scansioni</button>
                     </div>
                     <div class="card-illustration">
                         <i class="fas fa-spider"></i>
@@ -98,7 +117,7 @@
 
                 <!-- Recent Activity / Scraping Results -->
                 <div class="card activity-card">
-                    <h3>Ultimi Insight Notturni</h3>
+                    <h3><i class="fas fa-moon"></i> Ultimi Insight Notturni</h3>
                     <div class="table-container">
                         <table>
                             <thead>
@@ -125,7 +144,7 @@
                                 <tr>
                                     <td>constructionmaterials.eu</td>
                                     <td>Nuovi Standard ISO Geopolimeri</td>
-                                    <td><span style="color: var(--text-primary); font-weight: bold;">Bassa (41%)</span></td>
+                                    <td><span style="color: var(--text-secondary); font-weight: bold;">Bassa (41%)</span></td>
                                     <td><span class="status-badge processing">Da Revisionare</span></td>
                                 </tr>
                             </tbody>
@@ -134,41 +153,41 @@
                 </div>
             </div>
 
-            <!-- Knowledge Base View (Hidden by default) -->
+            <!-- ====== KNOWLEDGE BASE VIEW ====== -->
             <div class="knowledge-grid hidden" id="knowledgeView">
-                <!-- Source Aggregator Panel -->
-                <div class="source-panel" style="display: flex; flex-direction: column;">
-                    <div class="panel-header" style="flex-direction: column; align-items: stretch; gap: 16px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                <!-- Source Panel -->
+                <div class="source-panel">
+                    <div class="panel-header knowledge-header">
+                        <div class="knowledge-title-row">
                             <h3>Base di Conoscenza</h3>
-                            <button class="btn warning small" id="expandKnowledgeBtn" style="display: flex; align-items: center; gap: 6px;">
-                                <i class="fas fa-satellite-dish"></i> Espandi Conoscenza
+                            <button class="btn warning small" id="expandKnowledgeBtn">
+                                <i class="fas fa-satellite-dish"></i> Espandi
                             </button>
                         </div>
-                        <div class="search-box small" style="display: flex; align-items: center; background-color: var(--bg-darker); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; transition: var(--transition);">
-                            <i class="fas fa-search" style="color: var(--text-secondary); margin-right: 8px; font-size: 12px;"></i>
-                            <input type="text" id="docSearch" placeholder="Cerca documenti, argomenti, composti..." style="background: transparent; border: none; color: var(--text-primary); width: 100%; outline: none; font-size: 13px;">
+                        <div class="search-box-small">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="docSearch" placeholder="Cerca documenti...">
                         </div>
-                        <div class="category-filters" style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;">
+                        <div class="category-filters">
                             <button class="filter-pill active" data-category="tutte">Tutte</button>
                             <button class="filter-pill" data-category="materiali">Materiali</button>
                             <button class="filter-pill" data-category="ricerca">Ricerca</button>
                             <button class="filter-pill" data-category="normative">Normative</button>
+                            <button class="filter-pill" data-category="test">Test</button>
                         </div>
                     </div>
-                    
+
                     <div class="add-source-form hidden" id="addSourceForm">
-                        <p style="margin-bottom: 8px; font-size: 13px; color: var(--text-secondary);">Inserisci URL di un paper o archivio normativo per istruire Aria.</p>
+                        <p>Inserisci l'URL di un paper o archivio normativo per istruire Aria.</p>
                         <input type="text" placeholder="https://..." id="newSourceInput">
                         <div class="form-actions">
                             <button class="btn outline small" id="cancelSourceBtn">Annulla</button>
-                            <button class="btn primary small" id="submitSourceBtn">Scansiona URL</button>
+                            <button class="btn primary small" id="submitSourceBtn"><i class="fas fa-satellite-dish"></i> Scansiona</button>
                         </div>
                     </div>
 
                     <div class="source-list" id="sourceList">
-                        <!-- Simulated Source Cards -->
-                        <div class="source-card active" data-category="normative" data-title="Specifiche CM-841.pdf">
+                        <div class="source-card active" data-category="normative" data-title="Specifiche CM-841">
                             <div class="source-icon doc"><i class="fas fa-file-pdf"></i></div>
                             <div class="source-info">
                                 <h4>Specifiche CM-841.pdf</h4>
@@ -186,65 +205,132 @@
                             <div class="source-icon api"><i class="fas fa-database"></i></div>
                             <div class="source-info">
                                 <h4>DB Limiti Materiali</h4>
-                                <span>Materiali • API • Ultima mappatura 2h fa</span>
+                                <span>Materiali • API • Ultima mapp. 2h fa</span>
                             </div>
                         </div>
                         <div class="source-card" data-category="test" data-title="Risultati Trazione Lotto B">
-                            <div class="source-icon doc" style="background-color: rgba(35, 134, 54, 0.1); color: var(--success);"><i class="fas fa-file-excel"></i></div>
+                            <div class="source-icon test"><i class="fas fa-file-excel"></i></div>
                             <div class="source-info">
                                 <h4>Risultati Trazione Lotto B.xlsx</h4>
                                 <span>Test • 1.1 MB • Elaborato</span>
                             </div>
                         </div>
+                        <div class="source-card" data-category="normative" data-title="ISO 1920 Metodi di Prova">
+                            <div class="source-icon doc"><i class="fas fa-file-pdf"></i></div>
+                            <div class="source-info">
+                                <h4>ISO 1920 Metodi di Prova.pdf</h4>
+                                <span>Normative • 7.8 MB • Elaborato</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Database Graph Visualization -->
+                <!-- Graph Panel -->
                 <div class="graph-panel card">
                     <div class="panel-header">
-                        <h3>Grafo Relazioni Composti</h3>
+                        <h3><i class="fas fa-project-diagram"></i> Grafo Relazioni Composti</h3>
                         <div class="graph-actions">
-                            <button class="icon-btn small" title="Ingrandisci"><i class="fas fa-search-plus"></i></button>
-                            <button class="icon-btn small" title="Riduci"><i class="fas fa-search-minus"></i></button>
-                            <button class="icon-btn small" title="Adatta allo Schermo"><i class="fas fa-compress"></i></button>
+                            <button class="icon-btn small" id="graphFitBtn" title="Adatta allo schermo"><i class="fas fa-compress"></i></button>
                         </div>
                     </div>
                     <div id="knowledgeGraph" class="graph-container"></div>
                 </div>
             </div>
+
+            <!-- ====== CONFIGURAZIONE VIEW ====== -->
+            <div class="config-grid hidden" id="configView">
+                <div class="card config-section">
+                    <h2><i class="fas fa-robot"></i> Configurazione Assistente Aria</h2>
+                    <p class="config-desc">Imposta le credenziali dei servizi collegati. I valori vengono salvati localmente nel browser.</p>
+
+                    <div class="config-group">
+                        <h4><i class="fas fa-plug"></i> n8n Webhook</h4>
+                        <div class="config-field">
+                            <label for="cfgWebhookUrl">URL Webhook n8n</label>
+                            <div class="input-with-copy">
+                                <input type="text" id="cfgWebhookUrl" placeholder="https://your-n8n.cloud/webhook/...">
+                                <button class="copy-btn" data-target="cfgWebhookUrl" title="Copia"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <span class="config-hint">Il webhook n8n che elabora le richieste della chat di Aria.</span>
+                        </div>
+                    </div>
+
+                    <div class="config-group">
+                        <h4><i class="fas fa-database"></i> Supabase</h4>
+                        <div class="config-field">
+                            <label for="cfgSupabaseUrl">Supabase Project URL</label>
+                            <div class="input-with-copy">
+                                <input type="text" id="cfgSupabaseUrl" placeholder="https://xxxx.supabase.co">
+                                <button class="copy-btn" data-target="cfgSupabaseUrl" title="Copia"><i class="fas fa-copy"></i></button>
+                            </div>
+                        </div>
+                        <div class="config-field">
+                            <label for="cfgSupabaseKey">Supabase Anon Key</label>
+                            <div class="input-with-copy">
+                                <input type="password" id="cfgSupabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6Ikp...">
+                                <button class="toggle-pwd-btn" data-target="cfgSupabaseKey" title="Mostra/Nascondi"><i class="fas fa-eye"></i></button>
+                                <button class="copy-btn" data-target="cfgSupabaseKey" title="Copia"><i class="fas fa-copy"></i></button>
+                            </div>
+                            <span class="config-hint">Chiave pubblica anonima del progetto Supabase.</span>
+                        </div>
+                        <div class="config-field">
+                            <label for="cfgSupabaseTable">Nome Tabella Insights</label>
+                            <input type="text" id="cfgSupabaseTable" placeholder="knowledge_base">
+                            <span class="config-hint">Tabella da cui Aria legge gli insight notturni.</span>
+                        </div>
+                    </div>
+
+                    <div class="config-actions">
+                        <button class="btn outline" id="resetConfigBtn"><i class="fas fa-trash-alt"></i> Ripristina</button>
+                        <button class="btn primary" id="saveConfigBtn"><i class="fas fa-save"></i> Salva Configurazione</button>
+                    </div>
+                    <div class="config-status hidden" id="configStatus"></div>
+                </div>
+            </div>
         </main>
 
-        <!-- Chat Widget (Now can act as a side-panel for research) -->
+        <!-- ====== CHAT WIDGET ====== -->
         <div class="chat-widget" id="chatWidget">
             <div class="chat-header" id="chatHeader">
                 <div class="ai-agent">
                     <div class="ai-avatar"><i class="fas fa-robot"></i></div>
                     <div class="ai-info">
-                        <span class="ai-name">Assistente Aria</span>
+                        <span class="ai-name">Aria</span>
                         <span class="ai-status">Online</span>
                     </div>
                 </div>
-                <button class="close-chat" id="toggleChat" aria-label="Riduci Chat"><i class="fas fa-chevron-down"></i></button>
+                <div class="chat-header-actions">
+                    <button class="close-chat" id="toggleChat" aria-label="Riduci Chat"><i class="fas fa-chevron-down"></i></button>
+                </div>
             </div>
-            
+
             <div class="chat-messages" id="chatMessages">
                 <div class="message ai-message">
                     <div class="msg-content">
-                        Benvenuta, Dott.ssa Rossi! Sono Aria, il tuo assistente virtuale della Stark Industries. Ho già allineato i dati con le ultime ricerche e sono pronto a supportarti nel tuo lavoro. Da che parte iniziamo oggi?
+                        Benvenuta, Dott.ssa Rossi! 👋 Sono <strong>Aria</strong>, il tuo assistente virtuale della Stark Industries.<br><br>
+                        Ho già allineato i dati con le ultime ricerche. Come posso aiutarti oggi?
                     </div>
-                    <span class="msg-time" id="initTime">10:35 AM</span>
+                    <span class="msg-time" id="initTime"></span>
                 </div>
             </div>
-            
+
+            <!-- Quick Suggestions -->
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="suggestion-chip" data-text="Riassumi gli ultimi insight">📊 Ultimi insight</button>
+                <button class="suggestion-chip" data-text="Confronta CM-841 e CM-840">⚗️ Confronta formule</button>
+                <button class="suggestion-chip" data-text="Quali sono gli standard ISO rilevanti?">📋 Standard ISO</button>
+            </div>
+
             <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Chiedi informazioni su materiali..." aria-label="Inserisci messaggio">
+                <input type="text" id="chatInput" placeholder="Chiedi ad Aria..." aria-label="Inserisci messaggio">
                 <button id="sendBtn" class="send-btn" aria-label="Invia"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
 
-        <!-- Chat Toggle Button (Visible when chat is minimized) -->
+        <!-- Chat Toggle Button (mobile / minimized) -->
         <button class="chat-toggle-btn hidden" id="openChatBtn" aria-label="Apri Chat">
             <i class="fas fa-comment-dots"></i>
+            <span class="chat-toggle-badge" id="chatToggleBadge"></span>
         </button>
     </div>
 
@@ -254,10 +340,10 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').then(registration => {
-            console.log('SW registered: ', registration);
-          }).catch(registrationError => {
-            console.log('SW registration failed: ', registrationError);
+          navigator.serviceWorker.register('sw.js').then(registration => {
+            console.log('SW registrato:', registration);
+          }).catch(err => {
+            console.log('SW fallito:', err);
           });
         });
       }
